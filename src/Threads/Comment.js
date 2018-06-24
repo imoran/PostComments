@@ -33,20 +33,28 @@ class Comment extends Component {
 
   render() {
     console.log("render ", this.state);
-    const { comments, content, newComment } = this.state;
+    const { comments, content, newComment, upvotes } = this.state;
     return (
       <div>
         <div className="comment-border">
           <h2>{content === '' ?
-            <div>
+            <div className="comment-input">
               <textarea
                 value={newComment}
-                onChange={this.handleTextarea}></textarea>
-              <br />
+                onChange={this.handleTextarea}>
+              </textarea>
               <button onClick={this.saveComment}>Save Comment</button>
             </div>
             : content}</h2>
-          <button className="button" onClick={this.addComment}>Add Comment</button>
+          <div className="comment-button-group">
+            <button onClick={this.addComment}>Add Comment</button>
+            <div className="vote-group">
+              <button>Upvote</button>
+              <p>{upvotes}</p>
+              <button>Downvote</button>
+            </div>
+          </div>
+
         </div>
         {comments.map((c, idx) => (
           <div className="comment-margin" key={Math.random() * 10000000}>
