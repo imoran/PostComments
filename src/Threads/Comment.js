@@ -10,10 +10,9 @@ class Comment extends Component {
     this.addComment = this.addComment.bind(this);
     this.saveComment = this.saveComment.bind(this);
     this.handleTextarea = this.handleTextarea.bind(this);
-    this.upvote= this.upvote.bind(this);
+    this.upvote = this.upvote.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
     this.downvote = this.downvote.bind(this);
-
-    console.log("constructor ", this.state);
   }
 
   addComment() {
@@ -28,6 +27,17 @@ class Comment extends Component {
 
   handleTextarea(e) {
     this.setState({ newComment: e.target.value });
+  }
+
+  deleteComment() {
+    let parentComments = this.props.comments.parent.comments;
+    parentComments.forEach((el, idx) => {
+      if (el === this.props.comments) {
+        parentComments.splice(idx, 1);
+        return;
+      }
+    });
+    this.props.refresh();
   }
 
   upvote() {
@@ -84,7 +94,10 @@ class Comment extends Component {
             </div>
             : content}</h2>
           <div className="comment-button-group">
-            <button onClick={this.addComment}>Add Comment</button>
+            <div className="add-delete-buttons">
+              <button onClick={this.addComment}>Add Comment</button>
+              <button onClick={this.deleteComment}>Delete Comment</button>
+            </div>
             <div className="vote-group">
               <button onClick={this.upvote}>Upvote</button>
               <p>{votes}</p>
@@ -95,7 +108,7 @@ class Comment extends Component {
         </div>
         {comments.map((c, idx) => (
           <div className="comment-margin" key={Math.random() * 10000000}>
-            <Comment comments={c} />
+            <Comment comments={c} refresh={this.props.refresh} />
           </div>
         ))}
       </div>

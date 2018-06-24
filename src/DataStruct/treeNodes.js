@@ -8,9 +8,10 @@ export class PostNode {
 }
 
 export class CommentNode {
-  constructor(content = "", votes=0) {
+  constructor(content="", votes=0, parent=null) {
     this.content = content;
     this.comments = [];
     this.votes = votes;
+    this.parent = parent;
   }
 }

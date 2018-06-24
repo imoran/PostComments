@@ -4,10 +4,10 @@ import Post from './Threads/Post';
 import { PostNode, CommentNode } from './DataStruct/treeNodes';
 
 let post = new PostNode("Post Title", "Post Content", 154);
-let firstComment = new CommentNode("I am the first comment!", 23);
-let secondComment = new CommentNode("I am the second comment!", 10);
-let firstSubComment = new CommentNode("I am the first subcomment!", 4);
-let firstSubSubComment = new CommentNode("I am the first subcommentsubcomment!", 90);
+let firstComment = new CommentNode("I am the first comment!", 23, post);
+let secondComment = new CommentNode("I am the second comment!", 10, post);
+let firstSubComment = new CommentNode("I am the first subcomment!", 4, firstComment);
+let firstSubSubComment = new CommentNode("I am the first subcommentsubcomment!", 90, firstSubComment);
 post.comments.push(firstComment);
 post.comments.push(secondComment);
 firstComment.comments.push(firstSubComment);
