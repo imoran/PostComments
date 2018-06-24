@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { CommentNode } from '../DataStruct/treeNodes';
 
-
-
 class Comment extends Component {
   constructor(props) {
     super(props);
     this.state = this.props.comments;
     this.state.newComment = '';
+    this.state.voteStatus = 0;
     this.addComment = this.addComment.bind(this);
     this.saveComment = this.saveComment.bind(this);
     this.handleTextarea = this.handleTextarea.bind(this);
+    this.upvote= this.upvote.bind(this);
+    this.downvote = this.downvote.bind(this);
+
     console.log("constructor ", this.state);
   }
 
@@ -18,22 +20,57 @@ class Comment extends Component {
     let newComment = new CommentNode();
     this.state.comments.push(newComment);
     this.setState({});
-    console.log("add ", this.state);
   }
 
   saveComment() {
     this.setState({ content: this.state.newComment });
-    console.log("save ", this.state);
   }
 
   handleTextarea(e) {
-    this.setState({ newComment: e.target.value })
-    console.log("handle ", this.state);
+    this.setState({ newComment: e.target.value });
   }
 
+  upvote() {
+    if (this.state.voteStatus === 0) {
+      this.setState({
+        votes: this.state.votes + 1,
+        voteStatus: 1
+      });
+    } else if (this.state.voteStatus === 1) {
+      this.setState({
+        votes: this.state.votes - 1,
+        voteStatus: 0
+      });
+    } else if (this.state.voteStatus === -1) {
+      this.setState({
+        votes: this.state.votes + 2,
+        voteStatus: 1
+      })
+    }
+  }
+
+  downvote() {
+    if (this.state.voteStatus === 0) {
+      this.setState({
+        votes: this.state.votes - 1,
+        voteStatus: -1
+      });
+    } else if (this.state.voteStatus === -1) {
+      this.setState({
+        votes: this.state.votes + 1,
+        voteStatus: 0
+      });
+    } else if (this.state.voteStatus === 1) {
+      this.setState({
+        votes: this.state.votes - 2,
+        voteStatus: -1
+      })
+    }
+  }
+
+
   render() {
-    console.log("render ", this.state);
-    const { comments, content, newComment, upvotes } = this.state;
+    const { comments, content, newComment, votes } = this.state;
     return (
       <div>
         <div className="comment-border">
@@ -49,9 +86,9 @@ class Comment extends Component {
           <div className="comment-button-group">
             <button onClick={this.addComment}>Add Comment</button>
             <div className="vote-group">
-              <button>Upvote</button>
-              <p>{upvotes}</p>
-              <button>Downvote</button>
+              <button onClick={this.upvote}>Upvote</button>
+              <p>{votes}</p>
+              <button onClick={this.downvote}>Downvote</button>
             </div>
           </div>
 

@@ -1,22 +1,16 @@
 export class PostNode {
-  constructor(title="", content="", upvotes=0) {
+  constructor(title="", content="", votes=0) {
     this.title = title;
     this.content = content;
     this.comments = [];
-    this.upvotes = upvotes;
+    this.votes = votes;
   }
 }
 
 export class CommentNode {
-  constructor(content = "", upvotes=0) {
+  constructor(content = "", votes=0) {
     this.content = content;
     this.comments = [];
-    this.upvotes = upvotes;
+    this.votes = votes;
   }
 }
-
-// this.state = {
-//   content: '',
-//   comments: [],
-//   newComment: ''
-// }
