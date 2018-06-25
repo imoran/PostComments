@@ -13,5 +13,6 @@ export class CommentNode {
     this.comments = [];
     this.votes = votes;
     this.parent = parent;
+    this.margin = 0;
   }
 }
